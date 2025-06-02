@@ -25,12 +25,12 @@ import { subjects } from "@/constants";
 import { Textarea } from "./textarea";
 
 const formSchema = z.object({
-  name: z.string().min(1, { message: "companion is required" }),
-  subject: z.string().min(1, { message: "subject is required" }),
-  topic: z.string().min(1, { message: "topic is required" }),
-  voice: z.string().min(1, { message: "voice is required" }),
-  style: z.string().min(1, { message: "style is required" }),
-  duration: z.coerce.number().min(1, { message: "durations is required" }),
+  name: z.string().min(1, { message: "Companion is required" }),
+  subject: z.string().min(1, { message: "Subject is required" }),
+  topic: z.string().min(1, { message: "Topic is required" }),
+  voice: z.string().min(1, { message: "Voice is required" }),
+  style: z.string().min(1, { message: "Style is required" }),
+  duration: z.coerce.number().min(1, { message: "Durations is required" }),
 });
 
 const CompanionForm = () => {
@@ -108,7 +108,7 @@ const CompanionForm = () => {
           name="topic"
           render={({ field }) => (
             <FormItem>
-              <FormLabel> Waht should the Companion help with</FormLabel>
+              <FormLabel> What should the Companion help with</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Ex. Derivates & integrals"
