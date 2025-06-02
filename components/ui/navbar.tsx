@@ -2,7 +2,7 @@ import Link from 'next/link'
 import NavbarItems from "./NavbarItems";
 import {
 
-  SignIn,
+
   SignInButton,
   SignedIn,
   SignedOut,
@@ -20,12 +20,12 @@ const Navbar = () => {
       <div className="flex items-center gap-8 ">
         <NavbarItems />
         <SignedOut>
-          <div className='flex items-center gap-2'>
-            <SignInButton/>
-          </div>
+          <SignInButton>
+          <button className='btn-signin'>Sign in</button>
+         </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton afterSignOutUrl='/'/>
+          <UserButton/>
         </SignedIn>
       </div>
     </nav>
