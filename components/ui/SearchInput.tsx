@@ -19,7 +19,7 @@ const SearchInput = () => {
 
     
     useEffect(() => {
-      const delayDebounceFn = setTimeout(() => {
+      const delayDebounce = setTimeout(() => {
         if (searchQuery) {
           const newUrl = formUrlQuery({
             params: searchParams.toString(),
