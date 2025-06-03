@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const navitems = [
   { label: "Home", href: "/" },
-  { label: "Companions", href: "/companions" },
+  { label: "Companions", href: "/companion" },
   { label: "My Journey", href: "/my-Journey" },
 ];
 
