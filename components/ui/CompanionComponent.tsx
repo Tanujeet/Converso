@@ -1,32 +1,34 @@
 "use client";
 
-import { cn, getSubjectColor } from "@/lib/utils";
-import { vapi } from "@/lib/vapi.sdk";
-import { error } from "console";
 import { useEffect, useRef, useState } from "react";
+import { cn, configureAssistant, getSubjectColor } from "@/lib/utils";
+import { vapi } from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import soundwaves from "@/constants/soundwaves.json";
-import { Section } from "lucide-react";
+import { addToSessionHistory } from "@/lib/actions/companion.action";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
-  CONNECTING = "CONNECTIONG",
+  CONNECTING = "CONNECTING",
   ACTIVE = "ACTIVE",
   FINISHED = "FINISHED",
 }
 
 const CompanionComponent = ({
-  name,
+  companionId,
   subject,
   topic,
-  userImage,
+  name,
   userName,
+  userImage,
   style,
+  voice,
 }: CompanionComponentProps) => {
-  const [callStatus, setcallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
-  const [isSpeaking, setisSpeaking] = useState(false);
-  const [isMuted, setisMuted] = useState(false);
+  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -41,12 +43,24 @@ const CompanionComponent = ({
   }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
-    const onCallStart = () => setcallStatus(CallStatus.ACTIVE);
-    const onCallEnd = () => setcallStatus(CallStatus.FINISHED);
-    const onMessage = () => {};
-    const onSpeechStart = () => setisSpeaking(true);
-    const onSpeechEnd = () => setisSpeaking(false);
-    const onError = (error: Error) => console.log(error);
+    const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+
+    const onCallEnd = () => {
+      setCallStatus(CallStatus.FINISHED);
+      addToSessionHistory(companionId);
+    };
+
+    const onMessage = (message: Message) => {
+      if (message.type === "transcript" && message.transcriptType === "final") {
+        const newMessage = { role: message.role, content: message.transcript };
+        setMessages((prev) => [newMessage, ...prev]);
+      }
+    };
+
+    const onSpeechStart = () => setIsSpeaking(true);
+    const onSpeechEnd = () => setIsSpeaking(false);
+
+    const onError = (error: Error) => console.log("Error", error);
 
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
@@ -68,23 +82,23 @@ const CompanionComponent = ({
   const toggleMicrophone = () => {
     const isMuted = vapi.isMuted();
     vapi.setMuted(!isMuted);
-    setisMuted(!isMuted);
+    setIsMuted(!isMuted);
   };
 
   const handleCall = async () => {
-    setcallStatus(CallStatus.CONNECTING);
+    setCallStatus(CallStatus.CONNECTING);
 
     const assistantOverrides = {
       variableValues: { subject, topic, style },
-      clientMessages: ["transcript"],
-      serverMessages: [],
+      clientMessages: [] as any,
+      serverMessages: [] as any,
     };
 
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
   const handleDisconnect = () => {
-    setcallStatus(CallStatus.FINISHED);
+    setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   };
 
@@ -115,9 +129,10 @@ const CompanionComponent = ({
                 className="max-sm:w-fit"
               />
             </div>
+
             <div
               className={cn(
-                "absolute  transition-opacity duration-1000",
+                "absolute transition-opacity duration-1000",
                 callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
               )}
             >
@@ -131,6 +146,7 @@ const CompanionComponent = ({
           </div>
           <p className="font-bold text-2xl">{name}</p>
         </div>
+
         <div className="user-section">
           <div className="user-avatar">
             <Image
@@ -142,15 +158,19 @@ const CompanionComponent = ({
             />
             <p className="font-bold text-2xl">{userName}</p>
           </div>
-          <button className="btn-mic" onClick={toggleMicrophone}>
+          <button
+            className="btn-mic"
+            onClick={toggleMicrophone}
+            disabled={callStatus !== CallStatus.ACTIVE}
+          >
             <Image
               src={isMuted ? "/icons/mic-off.svg" : "/icons/mic-on.svg"}
               alt="mic"
               width={36}
               height={36}
             />
-            <p className="max-md:hidden">
-              {isMuted ? "Turn on Microphone" : "Turn off Microphone"}{" "}
+            <p className="max-sm:hidden">
+              {isMuted ? "Turn on microphone" : "Turn off microphone"}
             </p>
           </button>
           <button
@@ -171,8 +191,27 @@ const CompanionComponent = ({
           </button>
         </div>
       </section>
+
       <section className="transcript">
-        <div className="transcript-message no-scrollbar">Message</div>
+        <div className="transcript-message no-scrollbar">
+          {messages.map((message, index) => {
+            if (message.role === "assistant") {
+              return (
+                <p key={index} className="max-sm:text-sm">
+                  {name.split(" ")[0].replace("/[.,]/g, ", "")}:{" "}
+                  {message.content}
+                </p>
+              );
+            } else {
+              return (
+                <p key={index} className="text-primary max-sm:text-sm">
+                  {userName}: {message.content}
+                </p>
+              );
+            }
+          })}
+        </div>
+
         <div className="transcript-fade" />
       </section>
     </section>
