@@ -13,6 +13,7 @@ interface CompanionListProps {
   className?: string;
 }
 import { cn, getSubjectColor } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 const CompanionList = ({
@@ -41,7 +42,7 @@ const CompanionList = ({
                       className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden"
                       style={{ backgroundColor: getSubjectColor(subject) }}
                     >
-                      <img
+                      <Image
                         src={`/icons/${subject}.svg`}
                         alt={subject}
                         width={35}
@@ -63,7 +64,7 @@ const CompanionList = ({
                   className="flex items-center justify-center rounded-lg w-fit p-2 md:hidden"
                   style={{ backgroundColor: getSubjectColor(subject) }}
                 >
-                  <img
+                  <Image
                     src={`/icons/${subject}.svg`}
                     alt={subject}
                     width={18}
@@ -76,7 +77,7 @@ const CompanionList = ({
                   <p className="text-2xl">
                     {duration} <span className="max-md:hidden">mins</span>
                   </p>
-                  <img
+                  <Image
                     src="/icons/clock.svg"
                     alt="minutes"
                     className="md:hidden"

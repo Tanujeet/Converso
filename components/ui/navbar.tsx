@@ -8,24 +8,25 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Image from 'next/image';
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <Link href="/">
         <div className="flex items-center gap-2.5 cursor-pointer">
-          <img src="/images/logo.svg" alt="logo" width={46} height={44} />
+          <Image src="/images/logo.svg" alt="logo" width={46} height={44} />
         </div>
       </Link>
       <div className="flex items-center gap-8 ">
         <NavbarItems />
         <SignedOut>
           <SignInButton>
-          <button className='btn-signin'>Sign in</button>
-         </SignInButton>
+            <button className="btn-signin">Sign in</button>
+          </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UserButton/>
+          <UserButton />
         </SignedIn>
       </div>
     </nav>

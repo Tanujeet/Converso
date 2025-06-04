@@ -2,6 +2,7 @@ import CompanionComponent from "@/components/ui/CompanionComponent";
 import { getCompanion } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 interface CompanionSessionPageProps {
@@ -26,7 +27,7 @@ const page = async ({ params }: CompanionSessionPageProps) => {
             className="size-[72px] flex items-center justify-center rounded-lg max-md:hidden"
             style={{ backgroundColor: getSubjectColor(subject) }}
           >
-            <img
+            <Image
               src={`/icons/${subject}.svg`}
               alt={subject}
               width={35}
