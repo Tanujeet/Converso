@@ -1,6 +1,12 @@
 import { getSubjectColor } from "@/lib/utils";
 
-const CompanionComponent = ({ name, subject, topic, title, duration,userImage,userName }:CompanionComponentProps) => {
+const CompanionComponent = ({
+  name,
+  subject,
+  topic,
+  userImage,
+  userName,
+}: CompanionComponentProps) => {
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
