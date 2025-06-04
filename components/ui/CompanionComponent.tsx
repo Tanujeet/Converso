@@ -99,7 +99,7 @@ const CompanionComponent = ({
 
     const assistantOverrides = {
       variableValues: { subject, topic, style },
-      clientMessages: [] as any,
+      clientMessages: ["transcript"] as any,
       serverMessages: [] as any,
     };
 
