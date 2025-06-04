@@ -6,18 +6,18 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 interface CompanionSessionPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 const page = async ({ params }: CompanionSessionPageProps) => {
-  const { id } = await params;
+  const { id } = params;
   const companion = await getCompanion(id);
   const user = await currentUser();
 
-  const { name, subject, topic, title, duration } = companion;
-
   if (!user) redirect("/sign-in");
-  if (!name) redirect("/companion");
+  if (!companion?.name) redirect("/companion");
+
+  const { name, subject, topic, title, duration } = companion;
 
   return (
     <main>
@@ -46,12 +46,14 @@ const page = async ({ params }: CompanionSessionPageProps) => {
           {duration} minutes
         </div>
       </article>
-      <CompanionComponent
-        {...companion}
-        companionId={id}
-        userName={user.firstName!}
-        userImage={user.imageUrl!}
-      />
+      {companion && user && (
+        <CompanionComponent
+          {...companion}
+          companionId={id}
+          userName={user.firstName!}
+          userImage={user.imageUrl!}
+        />
+      )}
     </main>
   );
 };
