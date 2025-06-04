@@ -43,7 +43,10 @@ const CompanionComponent = ({
   }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
-    const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+    const onCallStart = () => {
+      console.log("call-start event fired");
+      setCallStatus(CallStatus.ACTIVE);
+    };
 
     const onCallEnd = () => {
       setCallStatus(CallStatus.FINISHED);
@@ -57,10 +60,16 @@ const CompanionComponent = ({
       }
     };
 
-    const onSpeechStart = () => setIsSpeaking(true);
-    const onSpeechEnd = () => setIsSpeaking(false);
+    const onSpeechStart = () => {
+      setIsSpeaking(true);
+    };
+    const onSpeechEnd = () => {
+      setIsSpeaking(false);
+    };
 
-    const onError = (error: Error) => console.log("Error", error);
+    const onError = (error: Error) => {
+      console.log("Error", error);
+    };
 
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
@@ -115,7 +124,7 @@ const CompanionComponent = ({
                 "absolute transition-opacity duration-1000",
                 callStatus === CallStatus.FINISHED ||
                   callStatus === CallStatus.INACTIVE
-                  ? "opacity-1001"
+                  ? "opacity-100"
                   : "opacity-0",
                 callStatus === CallStatus.CONNECTING &&
                   "opacity-100 animate-pulse"
@@ -198,8 +207,7 @@ const CompanionComponent = ({
             if (message.role === "assistant") {
               return (
                 <p key={index} className="max-sm:text-sm">
-                  {name.split(" ")[0].replace("/[.,]/g, ", "")}:{" "}
-                  {message.content}
+                  {name.split(" ")[0].replace(/[.,]/g, "")}: {message.content}
                 </p>
               );
             } else {
