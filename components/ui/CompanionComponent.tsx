@@ -3,8 +3,10 @@
 import { cn, getSubjectColor } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { error } from "console";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import soundwaves from "@/constants/soundwaves.json";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -22,6 +24,18 @@ const CompanionComponent = ({
 }: CompanionComponentProps) => {
   const [callStatus, setcallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setisSpeaking] = useState(false);
+
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    if (lottieRef) {
+      if (isSpeaking) {
+        lottieRef.current?.play();
+      } else {
+        lottieRef.current?.stop();
+      }
+    }
+  }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
     const onCallStart = () => setcallStatus(CallStatus.ACTIVE);
@@ -75,6 +89,31 @@ const CompanionComponent = ({
                 className="max-sm:w-fit"
               />
             </div>
+            <div
+              className={cn(
+                "absolute  transition-opacity duration-1000",
+                callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
+              )}
+            >
+              <Lottie
+                lottieRef={lottieRef}
+                animationData={soundwaves}
+                autoplay={false}
+                className="companion-lottie"
+              />
+            </div>
+          </div>
+          <p className="font-bold text-2xl">{name}</p>
+        </div>
+        <div className="user-section">
+          <div className="user-avatar">
+            <Image
+              src={userImage}
+              alt={userName}
+              width={130}
+              height={130}
+              className="rounded-lg"
+            />
           </div>
         </div>
       </section>
