@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import soundwaves from "@/constants/soundwaves.json";
+import { Section } from "lucide-react";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -79,7 +80,6 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-    // @ts-expect-error
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
@@ -170,6 +170,10 @@ const CompanionComponent = ({
               : "Start Session"}
           </button>
         </div>
+      </section>
+      <section className="transcript">
+        <div className="transcript-message no-scrollbar">Message</div>
+        <div className="transcript-fade" />
       </section>
     </section>
   );
