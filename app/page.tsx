@@ -1,6 +1,6 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionList from "@/components/CompanionList";
-import CTA from "@/components/ui/CTA";
+import CTA from "@/components/CTA";
 import {
   getAllCompanions,
   getRecentSessions,
