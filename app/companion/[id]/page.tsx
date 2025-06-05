@@ -6,7 +6,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 interface CompanionSessionPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const Page = async ({ params }: CompanionSessionPageProps) => {
