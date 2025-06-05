@@ -8,7 +8,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import Image from "next/image";
-import CompanionList from "@/components/ui/CompanionList";
+import CompanionList from "@/components/CompanionList";
 import {
   getUserCompanions,
   getUserSessions,

@@ -1,4 +1,4 @@
-import CompanionCard from "@/components/ui/CompanionCard";
+import CompanionCard from "@/components/CompanionCard";
 import SearchInput from "@/components/ui/SearchInput";
 import SubjectFilter from "@/components/ui/SubjectFilter";
 import { getAllCompanions } from "@/lib/actions/companion.action";

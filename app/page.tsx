@@ -1,5 +1,5 @@
-import CompanionCard from "@/components/ui/CompanionCard";
-import CompanionList from "@/components/ui/CompanionList";
+import CompanionCard from "@/components/CompanionCard";
+import CompanionList from "@/components/CompanionList";
 import CTA from "@/components/ui/CTA";
 import {
   getAllCompanions,

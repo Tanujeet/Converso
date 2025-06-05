@@ -1,5 +1,5 @@
 
-import CompanionForm from "@/components/ui/CompanionForm";
+import CompanionForm from "@/components/CompanionForm";
 import { newCompanionPermissions } from "@/lib/actions/companion.action";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
