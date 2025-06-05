@@ -2,9 +2,9 @@ import { PricingTable } from "@clerk/nextjs";
 
 const subsciption = () => {
   return (
-    <div>
+    <main>
       <PricingTable />
-    </div>
+    </main>
   );
 };
 
