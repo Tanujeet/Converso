@@ -40,7 +40,7 @@ const CompanionComponent = ({
         lottieRef.current?.stop();
       }
     }
-  }, [isSpeaking, lottieRef]);
+  }, [isSpeaking]);
 
   useEffect(() => {
     const onCallStart = () => {
@@ -86,7 +86,7 @@ const CompanionComponent = ({
       vapi.off("speech-start", onSpeechStart);
       vapi.off("speech-end", onSpeechEnd);
     };
-  }, []);
+  }, [companionId]);
 
   const toggleMicrophone = () => {
     const isMuted = vapi.isMuted();
@@ -103,7 +103,7 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-    // @ts-expect-error
+    // @ts-expect-error Vapi SDK type mismatch
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 

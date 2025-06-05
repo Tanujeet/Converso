@@ -16,9 +16,8 @@ import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
 const SubjectFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const query = searchParams.get("subject") || "";
 
-  const [subject, setSubject] = useState(query);
+  const [subject, setSubject] = useState(searchParams.get("subject") || "");
 
   useEffect(() => {
     let newUrl = "";
@@ -34,8 +33,9 @@ const SubjectFilter = () => {
         value: subject,
       });
     }
+
     router.push(newUrl, { scroll: false });
-  }, [subject]);
+  }, [subject, router, searchParams]);
 
   return (
     <Select onValueChange={setSubject} value={subject}>
@@ -44,9 +44,9 @@ const SubjectFilter = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">All subjects</SelectItem>
-        {subjects.map((subject) => (
-          <SelectItem key={subject} value={subject} className="capitalize">
-            {subject}
+        {subjects.map((s) => (
+          <SelectItem key={s} value={s} className="capitalize">
+            {s}
           </SelectItem>
         ))}
       </SelectContent>

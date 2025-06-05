@@ -55,8 +55,10 @@ export const configureAssistant = (voice: string, style: string) => {
         },
       ],
     },
-    // clientMessages: [],
-    // serverMessages: [],
+    // @ts-expect-error Vapi SDK type mismatch
+    clientMessages: [],
+    // @ts-expect-error Vapi SDK type mismatch
+    serverMessages: [],
   };
   return vapiAssistant;
 };
