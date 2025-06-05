@@ -1,4 +1,4 @@
-import CompanionComponent from "@/components/ui/CompanionComponent";
+import CompanionComponent from "@/components/CompanionComponent";
 import { getCompanion } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";

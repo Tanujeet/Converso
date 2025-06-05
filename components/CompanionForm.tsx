@@ -26,9 +26,10 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { subjects } from "@/constants";
-import { Textarea } from "./textarea";
+
 import { createCompanion } from "@/lib/actions/companion.action";
 import { redirect } from "next/navigation";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion is required" }),
