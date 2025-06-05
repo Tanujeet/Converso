@@ -9,7 +9,7 @@ interface CompanionSessionPageProps {
   params: { id: string };
 }
 
-const page = async ({ params }: CompanionSessionPageProps) => {
+const Page = async ({ params }: CompanionSessionPageProps) => {
   const { id } = params;
   const companion = await getCompanion(id);
   const user = await currentUser();
@@ -58,4 +58,4 @@ const page = async ({ params }: CompanionSessionPageProps) => {
   );
 };
 
-export default page;
+export default Page;
