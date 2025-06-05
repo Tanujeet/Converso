@@ -99,10 +99,11 @@ const CompanionComponent = ({
 
     const assistantOverrides = {
       variableValues: { subject, topic, style },
-      clientMessages: ["transcript"] as any,
-      serverMessages: [] as any,
+      clientMessages: ["transcript"],
+      serverMessages: [],
     };
 
+    // @ts-expect-error
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
