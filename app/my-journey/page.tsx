@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import CompanionList from "@/components/ui/CompanionList";
 import {
   getUserCompanions,
   getUserSessions,
@@ -48,14 +49,43 @@ const Profile = async () => {
                 width={22}
                 height={22}
               />
+              <p className="text-2xl font-bold">{sessionHistory.length}</p>
             </div>
+            <div>Lesson Completed</div>
+          </div>
+          <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit ">
+            <div className="flex gap-2 items-center">
+              <Image
+                src="/icons/cap.svg"
+                alt="charcter"
+                width={22}
+                height={22}
+              />
+              <p className="text-2xl font-bold">{companion.length}</p>
+            </div>
+            <div>Companion Created</div>
           </div>
         </div>
       </section>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger></AccordionTrigger>
-          <AccordionContent></AccordionContent>
+      <Accordion type="multiple">
+        <AccordionItem value="recent">
+          <AccordionTrigger className="text-2xl font-bold">
+            Recent Session
+          </AccordionTrigger>
+          <AccordionContent>
+            <CompanionList
+              title="Recent Sessions"
+              companions={sessionHistory}
+            />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="companions">
+          <AccordionTrigger className="text-2xl font-bold">
+            My Companion {`(${companion.length})`}
+          </AccordionTrigger>
+          <AccordionContent>
+            <CompanionList title="My Companion" companions={companion} />
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </main>
