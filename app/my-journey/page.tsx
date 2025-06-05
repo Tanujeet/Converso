@@ -23,27 +23,39 @@ const Profile = async () => {
   return (
     <main className="min-lg:w-3/4">
       <section className="flex justify-between gap-4 max-sm:flex-col items-center">
-        <Image
-          src={user.imageUrl}
-          alt={user.firstName ?? "User"}
-          width={110}
-          height={110}
-        />
-        <div className="flex flex-col gap-2 ">
-          <h1 className="font-bold text-2xl">
-            {user.firstName} {user.lastName}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {user.emailAddresses[0].emailAddress}
-          </p>
+        <div className="flex gap-4 items-center">
+          <Image
+            src={user.imageUrl}
+            alt={user.firstName ?? "User"}
+            width={110}
+            height={110}
+          />
+          <div className="flex flex-col gap-2 ">
+            <h1 className="font-bold text-2xl">
+              {user.firstName} {user.lastName}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {user.emailAddresses[0].emailAddress}
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-4 ">
+          <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit ">
+            <div className="flex gap-2 items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="charcter"
+                width={22}
+                height={22}
+              />
+            </div>
+          </div>
         </div>
       </section>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger>Is it accessible?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It adheres to the WAI-ARIA design pattern.
-          </AccordionContent>
+          <AccordionTrigger></AccordionTrigger>
+          <AccordionContent></AccordionContent>
         </AccordionItem>
       </Accordion>
     </main>
