@@ -3,9 +3,8 @@ import CompanionForm from "@/components/ui/CompanionForm";
 import { newCompanionPermissions } from "@/lib/actions/companion.action";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
-import { ca } from "zod/v4/locales";
 
 const NewCompanion = async () => {
   const { userId } = await auth();
@@ -23,7 +22,7 @@ const NewCompanion = async () => {
       ) : (
         <article className=" companion-limit">
           <Image
-            src="images/limit.svg"
+            src="/images/limit.svg"
             alt="Companion limit reached"
             width={360}
             height={230}
